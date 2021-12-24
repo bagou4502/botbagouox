@@ -1,0 +1,39 @@
+{
+  "name": "bagouox",
+  "version": "0.0.1",
+  "description": "Bot de Bagou450 pour son Discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bagou4502/botbagouox.git"
+  },
+  "keywords": [
+    "bot",
+    "bagou450",
+    "bagou",
+    "pterodactyl",
+    "panel",
+    "bagou",
+    "bagouox",
+    "discord",
+    "pterodactyl",
+    "panel",
+    "pterodactyl",
+    "v1.X"
+  ],
+  "author": "Bagou450",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bagou4502/botbagouox/issues"
+  },
+  "homepage": "https://github.com/bagou4502/botbagouox#readme",
+  "dependencies": {
+    "discord.js": "^13.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.5.0"
+  }
+}
