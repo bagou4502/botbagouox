@@ -1,0 +1,24 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const embed = require('../../libs/linkembed').embed.embed;
+
+// Variable
+const name = 'Minecraft Java Version Changer';
+const bagouurl = 'mcjava';
+const pterourl = '296';
+const price = '11.50$';
+const description = 'This addon allow you do download all minecraft version directly from the panel';
+const imagefile = 'mcjava.jpg';
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('mcjava')
+        .setDescription(`For get link of my ${name} addon!`),
+    execute (interaction) {
+
+        interaction.reply({
+            embeds: [embed(name, bagouurl, pterourl, price, description)],
+            ephemeral: false,
+            files: [`./data/img/${imagefile}`]
+        });
+    }
+};

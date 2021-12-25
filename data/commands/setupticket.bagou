@@ -1,0 +1,30 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const {MessageActionRow, MessageButton, MessageEmbed, CommandInteraction} = require('discord.js');
+
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('setupticket')
+        .setDescription('Bot reply pong!'),
+
+    /**
+     *
+     * @param {CommandInteraction} interaction
+     */
+    async execute (interaction) {
+        const {guild} = interaction;
+        const embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Support')
+            .setDescription('Click on button for open a ticket');
+        const row = new MessageActionRow()
+            .addComponents(new MessageButton()
+                .setCustomId('ticketopen')
+                .setLabel('🎫 Open ticket')
+                .setStyle('PRIMARY'));
+        await guild.channels.cache.get(process.env.OPENTICKETID).send({components: [row], embeds: [embed]});
+        interaction.reply({content: 'Done', ephemeral: true});
+    }
+};

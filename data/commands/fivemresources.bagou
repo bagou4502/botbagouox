@@ -1,0 +1,24 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const embed = require('../../libs/linkembed').embed.embed;
+
+// Variable
+const name = 'FiveM Resources Manager';
+const bagouurl = 'fivemresources';
+const pterourl = '278';
+const price = '6.49$';
+const description = 'Pterodactyl Addon [1.X] - FiveM Resources Manager this addon allows you to see/start/stop/restart your FiveM resources from the panel.';
+const imagefile = 'fivemresources.jpg';
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('fivemresources')
+        .setDescription(`For get link of my ${name} addon!`),
+    execute (interaction) {
+
+        interaction.reply({
+            embeds: [embed(name, bagouurl, pterourl, price, description)],
+            ephemeral: false,
+            files: [`./data/img/${imagefile}`]
+        });
+    }
+};

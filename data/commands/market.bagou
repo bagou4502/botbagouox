@@ -1,0 +1,22 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const {MessageEmbed} = require('discord.js');
+
+const embed = new MessageEmbed().setColor('#674056')
+    .setTitle('My market')
+    .setURL('https://bagou450.com/bot/market.html')
+    .setDescription('You can see my market here -> https://pterodactylmarket.com/team/5158310')
+    .addFields({inline: true, name: 'You can see my test panel here', value: 'https://demo.bagou450.com'})
+    .setTimestamp()
+    .setFooter('Bagou450', 'https://cdn.discordapp.com/attachments/751908883005440071/924077222497775686/b5cc2146f6f5326025aac4bee011d70c.png');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('market')
+        .setDescription('For get link of my pterodactylmarket team!'),
+    execute (interaction) {
+
+        interaction.reply({
+            embeds: [embed],
+            ephemeral: false
+        });
+    }
+};

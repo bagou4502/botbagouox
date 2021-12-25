@@ -3,7 +3,6 @@ require('dotenv').config();
 const {REST} = require('@discordjs/rest');
 const {Routes} = require('discord-api-types/v9');
 const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
-
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -30,9 +29,9 @@ for (const file of CommandsFiles) {
     client.commands.set(command.data.name, command);
     logs.info(`${color.Bright(color.FgCyan(command.data.name.charAt(0).toUpperCase() + command.data.name.slice(1)))} initialized sucessfully`);
 }
+require('./data/Handlers/Events')(client);
 
 client.once('ready', () => {
-    logs.info(`${color.BgBlack(color.FgBlue('Bagouox'))} is ${color.FgGreen('online')}!`);
     const CLIENT_ID = client.user.id;
     const rest = new REST({
         version: '9'
@@ -71,21 +70,20 @@ client.on('ready', () => {
     } else {
         command = client.application?.commands;
     }
-
-    command?.create({
-        description: 'Replies with pong.',
-        name: 'ping'
-    });
-    logs.info(`${color.Bright(color.FgCyan('Ping'))} Command was loaded.`);
-    command?.create({
-        description: 'List all commands.',
-        name: 'help'
-    });
-    logs.info(`${color.Bright(color.FgCyan('Help'))} Command was loaded.`);
+    for (const file of CommandsFiles) {
+        const commandname = require(`./data/commands/${file}`);
+        logs.info(`Loading of ${color.Bright(color.FgCyan(commandname.data.name))} command...`);
+        command?.create({
+            category: commandname.data.category,
+            description: commandname.data.description,
+            name: commandname.data.name
+        });
+        logs.info(`${color.Bright(color.FgCyan(commandname.data.name.charAt(0).toUpperCase() + commandname.data.name.slice(1)))} Command was loaded.`);
+    }
+    logs.info(`${color.BgBlack(color.FgBlue('Bagouox'))} is ${color.FgGreen('online')}!`);
 
 });
 
-// eslint-disable-next-line max-statements
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) {
         return;
@@ -100,6 +98,8 @@ client.on('interactionCreate', async (interaction) => {
         const embed = new MessageEmbed().setColor('#76FD3D')
             .setTitle('List of commands')
             .setURL('https://bagou450.com/bot/help.html')
+            .addField({inline: true, name: 'You can see my test panel here', value: 'https://demo.bagou450.com'})
+            .setTimestamp()
             .setFooter('Bagou450', 'https://cdn.discordapp.com/attachments/751908883005440071/924077222497775686/b5cc2146f6f5326025aac4bee011d70c.png');
         commandslist.forEach((aa) => {
             embed.addField(aa.data.name.charAt(0).toUpperCase() + aa.data.name.slice(1), aa.data.description);

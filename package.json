@@ -34,10 +34,13 @@
     "@discordjs/builders": "^0.10.0",
     "@discordjs/rest": "^0.2.0-canary.0",
     "ansi-styles": "^6.1.0",
+    "ascii-table": "^0.0.9",
     "discord-api-types": "^0.25.2",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
+    "glob": "^7.2.0",
     "log4js": "^6.3.0",
+    "mongose": "^0.0.2-security",
     "strip-ansi": "^7.0.1",
     "util": "^0.12.4"
   },

@@ -1,0 +1,24 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const embed = require('../../libs/linkembed').embed.embed;
+
+// Variable
+const name = 'Server Importer';
+const bagouurl = 'deamonrebootandshut';
+const pterourl = '288';
+const price = '6.00$';
+const description = 'This addon allow user to import own server from a sftp server (soon ftp)';
+const imagefile = 'importer.jpg';
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('importer')
+        .setDescription(`For get link of my ${name} addon!`),
+    execute (interaction) {
+
+        interaction.reply({
+            embeds: [embed(name, bagouurl, pterourl, price, description)],
+            ephemeral: false,
+            files: [`./data/img/${imagefile}`]
+        });
+    }
+};

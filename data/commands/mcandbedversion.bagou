@@ -1,0 +1,22 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const embed = require('../../libs/linkembed').embed.embed;
+
+// Variable
+const name = 'Minecraft Java Version Changer + Minecraft Bedrock Version Changer bundle';
+const bagouurl = 'mcbedandjava';
+const pterourl = '299';
+const price = '14.5$';
+const description = 'Java version changer + Bedrock version changer';
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('mcbedandjava')
+        .setDescription(`For get link of my ${name} addon!`),
+    execute (interaction) {
+
+        interaction.reply({
+            embeds: [embed(name, bagouurl, pterourl, price, description)],
+            ephemeral: false
+        });
+    }
+};

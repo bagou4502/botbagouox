@@ -1,0 +1,24 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const embed = require('../../libs/linkembed').embed.embed;
+
+// Variable
+const name = 'Minecraft server icon changer';
+const bagouurl = 'mcicon';
+const pterourl = '281';
+const price = '2.00$';
+const description = 'This addon allow you to upload a icon for minecraft server this icon will be displayed in minecraft server list.';
+const imagefile = 'mcicon.jpg';
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('mcservericon')
+        .setDescription(`For get link of my ${name} addon!`),
+    execute (interaction) {
+
+        interaction.reply({
+            embeds: [embed(name, bagouurl, pterourl, price, description)],
+            ephemeral: false,
+            files: [`./data/img/${imagefile}`]
+        });
+    }
+};
