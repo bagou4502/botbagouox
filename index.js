@@ -24,12 +24,9 @@ const CommandsFiles = fs.readdirSync('./data/commands').filter((file) => file.en
 
 for (const file of CommandsFiles) {
     const command = require(`./data/commands/${file}`);
-    logs.info(`Initialisation of ${color.Bright(color.FgCyan(command.data.name))} command...`);
     commands.push(JSON.stringify(command.data));
     client.commands.set(command.data.name, command);
-    logs.info(`${color.Bright(color.FgCyan(command.data.name.charAt(0).toUpperCase() + command.data.name.slice(1)))} initialized sucessfully`);
 }
-require('./data/Handlers/Events')(client);
 
 client.once('ready', () => {
     const CLIENT_ID = client.user.id;
@@ -72,15 +69,14 @@ client.on('ready', () => {
     }
     for (const file of CommandsFiles) {
         const commandname = require(`./data/commands/${file}`);
-        logs.info(`Loading of ${color.Bright(color.FgCyan(commandname.data.name))} command...`);
         command?.create({
             category: commandname.data.category,
             description: commandname.data.description,
             name: commandname.data.name
         });
-        logs.info(`${color.Bright(color.FgCyan(commandname.data.name.charAt(0).toUpperCase() + commandname.data.name.slice(1)))} Command was loaded.`);
+        logs.debug(`${color.Bright(color.FgCyan(commandname.data.name.charAt(0).toUpperCase() + commandname.data.name.slice(1)))} ${color.FgGreen(color.Bright('Command'))} was loaded.`);
     }
-    logs.info(`${color.BgBlack(color.FgBlue('Bagouox'))} is ${color.FgGreen('online')}!`);
+    require('./data/Handlers/Events')(client);
 
 });
 

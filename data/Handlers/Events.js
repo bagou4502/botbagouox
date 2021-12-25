@@ -22,7 +22,8 @@ module.exports = async (client) => {
         }
 
         await Table.addRow(event.name, 'Successfully');
-        log.info(`${color.FgCyan(event.description)} Event loaded successfully`);
+        log.debug(`${color.FgCyan(event.description)} ${color.FgRed(color.Bright('Event'))} loaded successfully.`);
     });
+    log.info(`${color.BgBlack(color.FgBlue('Bagouox'))} is ${color.FgGreen('online')}!`);
 
 };
