@@ -40,7 +40,7 @@ class log {
     }
 
     static err (data) {
-        logforconsole.err(color.Dim('[') + color.FgGreen('Bagouox ') + color.FgRed('ERROR') + color.Dim('] ') + data);
+        logforconsole.error(color.Dim('[') + color.FgGreen('Bagouox ') + color.FgRed('ERROR') + color.Dim('] ') + data);
         try {
             // eslint-disable-next-line no-control-regex
             const logforfile = data.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');

@@ -4,7 +4,7 @@ const {REST} = require('@discordjs/rest');
 const {Routes} = require('discord-api-types/v9');
 const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
 const mongoose = require('mongoose');
-const Database = 'mongodb://localhost:27017/bagouox';
+const Database = 'mongodb://192.168.1.5:27017/bagouox';
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,

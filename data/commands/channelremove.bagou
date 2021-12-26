@@ -1,0 +1,17 @@
+const {SlashCommandBuilder} = require('@discordjs/builders');
+
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('removechannel')
+        .setDescription('For remove a channel'),
+    execute (interaction) {
+        interaction.reply({
+            content: 'Removed'
+        });
+        const {channel} = interaction;
+        setTimeout(() => {
+            channel.delete();
+        }, 2000);
+    }
+};

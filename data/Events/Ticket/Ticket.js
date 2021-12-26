@@ -50,13 +50,11 @@ module.exports = {
             });
             const Embed = new MessageEmbed()
                 .setAuthor(`${guild.name} | Ticket : ${ID}`, guild.iconURL({dynamic: true}))
-                .setDescription('TEXT TO CHANGE ONE')
-                .setFooter('The Buttons below are Staff only.');
-
+                .setDescription('Explain your problem/question here.');
             const Buttons = new MessageActionRow()
                 .addComponents(new MessageButton()
-                    .setCustomId('ticketopen')
-                    .setLabel('🎫 Close ticket')
+                    .setCustomId('ticketclose')
+                    .setLabel('❌ Close ticket')
                     .setStyle('PRIMARY'));
             channel.send({embeds: [Embed], components: [Buttons]});
             await channel.send({content: `${member} here is your ticket`}).then((ma) => {
