@@ -59,14 +59,14 @@ module.exports = {
                     .setLabel('🎫 Close ticket')
                     .setStyle('PRIMARY'));
             channel.send({embeds: [Embed], components: [Buttons]});
-            await (await channel.send({content: `${member} here is your ticket`})).then((ma) => {
+            await channel.send({content: `${member} here is your ticket`}).then((ma) => {
                 setTimeout(() => {
                     // eslint-disable-next-line no-empty-function
                     ma.delete().catch(() => {});
                 }, 5000);
             });
 
-            reply({content: 'TICKET WAS CREATED'});
+            interaction.reply({content: `Votre ticket a été crée #ticket-${ID}`, ephemeral: true});
         });
 
 

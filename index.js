@@ -3,6 +3,8 @@ require('dotenv').config();
 const {REST} = require('@discordjs/rest');
 const {Routes} = require('discord-api-types/v9');
 const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
+const mongoose = require('mongoose');
+const Database = 'mongodb://localhost:27017/bagouox';
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -76,6 +78,12 @@ client.on('ready', () => {
         });
         logs.debug(`${color.Bright(color.FgCyan(commandname.data.name.charAt(0).toUpperCase() + commandname.data.name.slice(1)))} ${color.FgGreen(color.Bright('Command'))} was loaded.`);
     }
+    mongoose.connect(Database, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => logs.debug(`Connected to ${color.FgMagenta('Database')}`))
+        .catch(() => logs.fatal('Cant connect to Database.'));
+
     require('./data/Handlers/Events')(client);
 
 });
