@@ -5,11 +5,13 @@
 <p>Bagouox est un bot fait par Bagou450 ayant pour but de servir sur le discord de son créateur.</p>
 
 <h2 align="center">---How to Install---</h2>
-<p align="center">For install bagouox you need first to install NodeJS 16 after go in bot folder and run this command<br>
+<p align="center">For install bagouox you need first to install NodeJS 16 after go in bot folder and run this command: <br>
 ```console
-node .
+npm i
 ```
-<br> After you need to rename .env.sample in .env. You need also to edit .env for change bot configuration.
+<br> 
+
+After you need to rename .env.sample in .env. You need also to edit .env for change bot configuration.
 
 For start the bot run: <br>
 ```console
