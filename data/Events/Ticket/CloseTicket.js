@@ -75,6 +75,7 @@ module.exports = {
                     log.err(errr);
                 }
                 clientftp.close();
+                fs.unlinkSync(`./transcripts/${name}.transcripts`);
                 await DB.updateOne({ChannelID: channel.id}, {Closed: true});
                 const MEMBER = guild.members.cache.get(docs.MemberID);
                 const Message = await guild.channels.cache.get(TRANSCRIPTIONID).send({
