@@ -10,7 +10,9 @@
 npm i
 ```
 <br> 
-
+```console
+npm i
+```
 After you need to rename .env.sample in .env. You need also to edit .env for change bot configuration.
 
 For start the bot run: <br>
