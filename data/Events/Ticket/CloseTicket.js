@@ -64,9 +64,9 @@ module.exports = {
                 try {
                     log.info(`Start upload of ${docs.TicketID} on transcripts server`);
                     await clientftp.access({
-                        host: 'ftp.bagou450.com',
-                        user: 'transcriptsbot',
-                        password: 'F^t0no70',
+                        host: process.env.FTPHOTE,
+                        user: process.env.FTPUSER,
+                        password: process.env.FTPPASS,
                         secure: false
                     });
                     await clientftp.uploadFrom(`./transcripts/${name}.transcripts`, `${name}.html`);
