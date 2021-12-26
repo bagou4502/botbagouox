@@ -7,11 +7,11 @@
 <h2 align="center">---How to Install---</h2>
 <p align="center">For install bagouox you need first to install NodeJS 16 after go in bot folder and run this command<br>
 ```console
-npm i
+node .
 ```
 <br> After you need to rename .env.sample in .env. You need also to edit .env for change bot configuration.
 
-For start the bot run node <br>
+For start the bot run: <br>
 ```console
 node .
 ```
