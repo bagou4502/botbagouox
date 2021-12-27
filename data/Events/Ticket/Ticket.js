@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
-const {ButtonInteraction, MessageEmbed, MessageActionRow, MessageButton} = require('discord.js');
-const {execute} = require('../../commands/setupticket.bagou');
+const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js');
 const DB = require('../../schemas/Ticket');
 const EVERYONEID = process.env.EVERYONE_ID;
 const TICKETCATID = process.env.TICKETCATID;

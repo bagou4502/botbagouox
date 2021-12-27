@@ -1,0 +1,27 @@
+const TMP = require('./../schemas/Transcription');
+
+
+const {SlashCommandBuilder} = require('@discordjs/builders');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('transcripts')
+        .setDescription('Get transcripts of a ticket')
+        .addStringOption((option) => option
+            .setName('number')
+            .setDescription('Number of the ticket.')
+            .setRequired(true)),
+    permission: 'ADMINISTRATOR',
+    execute (interaction) {
+        const {options} = interaction;
+
+        TMP.find().lean()
+            .where({TicketID: options.getString('number')})
+            .exec((err, users) => {
+                interaction.reply({
+                    content: `The ticket ${options.getString('number')} was [here](${JSON.stringify(users[0].URL).replaceAll('"', '')})`,
+                    ephemeral: true
+                });
+            });
+
+    }
+};

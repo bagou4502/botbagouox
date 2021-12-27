@@ -1,17 +1,37 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
 const {SlashCommandBuilder} = require('@discordjs/builders');
-
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('clear')
-        .setDescription('Clear 100 message of the channel'),
+        .setDescription('Clear 100 message of the channel')
+        .addStringOption((option) => option
+            .setName('number')
+            .setDescription('Number of message need to be removed')
+            .setRequired(true)),
+    permission: 'ADMINISTRATOR',
     execute (interaction) {
+        const {channel, options} = interaction;
 
-        const {channel} = interaction;
-        channel.bulkDelete(100);
-        interaction.reply({
-            content: 'Removed',
-            ephemeral: true
-        });
+        if (options.getString('number') > 100) {
+            interaction.reply({
+                content: 'Can\'t remove more than 100 messages',
+                ephemeral: true
+            });
+        } else {
+            try {
+                channel.bulkDelete(options.getString('number'));
+                interaction.reply({
+                    content: `Removed ${options.getString('number')} message`,
+                    ephemeral: true
+                });
+            } catch {
+                interaction.reply({
+                    content: 'Can\'t remove message older than 2 week',
+                    ephemeral: true
+                });
+            }
+
+        }
     }
 };

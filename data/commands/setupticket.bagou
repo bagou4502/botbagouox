@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
 const {SlashCommandBuilder} = require('@discordjs/builders');
-const {MessageActionRow, MessageButton, MessageEmbed, CommandInteraction} = require('discord.js');
-
+const {MessageActionRow, MessageButton, MessageEmbed} = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()

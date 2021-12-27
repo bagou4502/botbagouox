@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
-const {REST} = require('@discordjs/rest');
-const {Routes} = require('discord-api-types/v9');
 const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
 const mongoose = require('mongoose');
 const Database = 'mongodb://192.168.1.5:27017/bagouox';
@@ -30,40 +28,10 @@ for (const file of CommandsFiles) {
     client.commands.set(command.data.name, command);
 }
 
-client.once('ready', () => {
-    const CLIENT_ID = client.user.id;
-    const rest = new REST({
-        version: '9'
-    }).setToken(process.env.APP_TOKEN);
-    // eslint-disable-next-line no-unused-expressions
-    async () => {
-        try {
-            if (process.env.TYPE === 'production') {
-                await rest.put(Routes.applicationCommand(CLIENT_ID), {
-                    body: commands
-                });
-                logs.info('All commands are globaly saved');
-
-            } else {
-                await rest.put(Routes.applicationCommand(CLIENT_ID, process.env.APP_GUILDID), {
-                    body: commands
-                });
-                logs.info('All command are localy saved.');
-
-            }
-        } catch (err) {
-            if (err) {
-                logs.err(err);
-            }
-        }
-    };
-});
-
 
 client.on('ready', () => {
     const guild = client.guilds.cache.get(process.env.APP_GUILDID);
     let command;
-
     if (guild) {
         command = guild.commands;
     } else {
@@ -71,11 +39,23 @@ client.on('ready', () => {
     }
     for (const file of CommandsFiles) {
         const commandname = require(`./data/commands/${file}`);
-        command?.create({
-            category: commandname.data.category,
-            description: commandname.data.description,
-            name: commandname.data.name
-        });
+        if (commandname.permission) {
+            const perm = commandname.permission;
+            command?.create({
+                category: commandname.data.category,
+                description: commandname.data.description,
+                name: commandname.data.name,
+                options: commandname.data.options,
+                permissions: {perm}
+            });
+        } else {
+            command?.create({
+                category: commandname.data.category,
+                description: commandname.data.description,
+                name: commandname.data.name,
+                options: commandname.data.options
+            });
+        }
         logs.debug(`${color.Bright(color.FgCyan(commandname.data.name.charAt(0).toUpperCase() + commandname.data.name.slice(1)))} ${color.FgGreen(color.Bright('Command'))} was loaded.`);
     }
     mongoose.connect(Database, {
@@ -88,7 +68,7 @@ client.on('ready', () => {
 
 });
 
-client.on('interactionCreate', async (interaction) => {
+client.on('interactionCreate', async (interaction, args) => {
     if (!interaction.isCommand()) {
         return;
     }
@@ -111,7 +91,23 @@ client.on('interactionCreate', async (interaction) => {
         await interaction.reply({embeds: [embed]});
     } else {
         try {
-            await command.execute(interaction);
+            const perm = interaction.client.commands.get(interaction.commandName).permission;
+            const authorPerms = interaction.channel.permissionsFor(interaction.member);
+            if (perm) {
+                if (!authorPerms || !authorPerms.has(perm)) {
+                    const NoPerm = new MessageEmbed()
+                        .setColor('RED')
+                        .setDescription('You don\'t have permission to execute this command');
+                    interaction.reply({
+                        embeds: [NoPerm],
+                        ephemeral: true
+                    });
+                } else {
+                    await command.execute(interaction, args);
+                }
+            } else {
+                await command.execute(interaction, args);
+            }
         } catch (err) {
             if (err) {
                 logs.err(color.FgRed(err));

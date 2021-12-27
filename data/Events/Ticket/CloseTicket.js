@@ -6,6 +6,7 @@ require('dotenv').config();
 // eslint-disable-next-line no-unused-vars
 const {ButtonInteraction, MessageEmbed, MessageActionRow, MessageButton, Interaction} = require('discord.js');
 const DB = require('../../schemas/Ticket');
+const DBTRANSCRIPT = require('../../schemas/Transcription');
 const TRANSCRIPTIONID = process.env.TRANSCRIPTID;
 const log = require('../../../libs/logger').log;
 const {v4} = require('uuid');
@@ -76,6 +77,10 @@ module.exports = {
                 }
                 clientftp.close();
                 fs.unlinkSync(`./transcripts/${name}.transcripts`);
+                await DBTRANSCRIPT.create({
+                    TicketID: docs.TicketID,
+                    URL: `https://transcripts.bagou450.com/data/${name}.html`
+                });
                 await DB.updateOne({ChannelID: channel.id}, {Closed: true});
                 const MEMBER = guild.members.cache.get(docs.MemberID);
                 const Message = await guild.channels.cache.get(TRANSCRIPTIONID).send({

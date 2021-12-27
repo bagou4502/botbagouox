@@ -1,7 +1,6 @@
 const log4js = require('log4js');
 const date = new Date(new Date(Date.now()).toISOString());
 const logfile = `./logs/log-${date.getFullYear()}-${date.getMonth()}-${date.getDay()}-${date.getHours()}-${date.getMinutes()}.log`;
-const stripAnsi = 'strip-ansi';
 const color = require('./color').color;
 log4js.configure({
     'appenders': {'Bagouox': {'filename': logfile, 'type': 'file'},
