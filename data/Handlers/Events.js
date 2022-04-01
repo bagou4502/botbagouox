@@ -25,5 +25,38 @@ module.exports = async (client) => {
         log.debug(`${color.FgCyan(event.description)} ${color.FgRed(color.Bright('Event'))} loaded successfully.`);
     });
     log.info(`${color.BgBlack(color.FgBlue('Bagouox'))} is ${color.FgGreen('online')}!`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................................................................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................................................................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................................................................................'))}`);
+
+    log.info(`${color.BgBlack(color.FgWhite('..........................................'))}${color.BgBlack(color.FgCyan('\'\'\'\'\'\''))}${color.BgBlack(color.FgWhite('....................................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\',;;;;;;;,,,\'\''))}${color.BgBlack(color.FgWhite('..............................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('......'))}${color.BgBlack(color.FgCyan('\'\',;;;,'))}${color.BgBlack(color.FgWhite('..........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('......'))}${color.BgBlack(color.FgCyan('\'\',;;;,'))}${color.BgBlack(color.FgWhite('..........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('......'))}${color.BgBlack(color.FgCyan('\'\',;;;,'))}${color.BgBlack(color.FgWhite('..........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('......'))}${color.BgBlack(color.FgCyan('\'\',;;;,'))}${color.BgBlack(color.FgWhite('..........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('......'))}${color.BgBlack(color.FgCyan('\',;;,'))}${color.BgBlack(color.FgWhite('..........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\',;;\''))}${color.BgBlack(color.FgWhite('.........'))}${color.BgBlack(color.FgCyan('\';;;,\''))}${color.BgBlack(color.FgWhite('.........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('..........................................'))}${color.BgBlack(color.FgCyan('\'\''))}${color.BgBlack(color.FgWhite('.........'))}${color.BgBlack(color.FgCyan('\'\',;;;,'))}${color.BgBlack(color.FgWhite('.........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('.............................................'))}${color.BgBlack(color.FgCyan('\'\'\'\'\',,,;;;,'))}${color.BgBlack(color.FgWhite('...........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('........................................'))}${color.BgBlack(color.FgCyan('\',,,;;;;;;;;;;;;,,\'\''))}${color.BgBlack(color.FgWhite('........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('......................................'))}${color.BgBlack(color.FgCyan(',,;;;,,,,,,,,,,,,,;;;;,\''))}${color.BgBlack(color.FgWhite('......................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................'))}${color.BgBlack(color.FgCyan('\';;;,\'\''))}${color.BgBlack(color.FgWhite('..............'))}${color.BgBlack(color.FgCyan('\',,;;,\''))}${color.BgBlack(color.FgWhite('....................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('...................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('...................'))}${color.BgBlack(color.FgCyan('\',;;;\''))}${color.BgBlack(color.FgWhite('...................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('..................................'))}${color.BgBlack(color.FgCyan('\',;;,......................,;;,\''))}${color.BgBlack(color.FgWhite('..................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('..................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('.......'))}${color.BgBlack(color.FgCyan('\',;;;,;;;;;;,\'.\';;;\''))}${color.BgBlack(color.FgWhite('..................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('..................................'))}${color.BgBlack(color.FgCyan('\';;;\''))}${color.BgBlack(color.FgWhite('........'))}${color.BgBlack(color.FgCyan('\',,,,,,,,;;;\'..\'\'\''))}${color.BgBlack(color.FgWhite('...................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('...................................'))}${color.BgBlack(color.FgCyan(',;;,'))}${color.BgBlack(color.FgWhite('................'))}${color.BgBlack(color.FgCyan(',;;,\''))}${color.BgBlack(color.FgWhite('........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('...................................'))}${color.BgBlack(color.FgCyan('\',;;,\''))}${color.BgBlack(color.FgWhite('............'))}${color.BgBlack(color.FgCyan('\',;;,\''))}${color.BgBlack(color.FgWhite('.........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................'))}${color.BgBlack(color.FgCyan('\',;;;,\'\''))}${color.BgBlack(color.FgWhite('.....'))}${color.BgBlack(color.FgCyan('\'\'\',;;;,\''))}${color.BgBlack(color.FgWhite('..........................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('......................................'))}${color.BgBlack(color.FgCyan('\',,;;;;;,,;;;;;;,\''))}${color.BgBlack(color.FgWhite('............................................'))}`);
+
+    log.info(`${color.BgBlack(color.FgWhite('.........................................'))}${color.BgBlack(color.FgCyan('\'\',,,,,,,,\'\''))}${color.BgBlack(color.FgWhite('...............................................'))}`);
+
+
+    log.info(`${color.BgBlack(color.FgWhite('....................................................................................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................................................................................'))}`);
+    log.info(`${color.BgBlack(color.FgWhite('....................................................................................................'))}`);
+
 
 };

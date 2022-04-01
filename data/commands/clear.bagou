@@ -19,18 +19,15 @@ module.exports = {
                 ephemeral: true
             });
         } else {
-            try {
-                channel.bulkDelete(options.getString('number'));
-                interaction.reply({
+                channel.bulkDelete(options.getString('number')).then(message => {
+                    interaction.reply({
                     content: `Removed ${options.getString('number')} message`,
                     ephemeral: true
+                    });
+                }).catch((error) => {
+                    console.log(error)
                 });
-            } catch {
-                interaction.reply({
-                    content: 'Can\'t remove message older than 2 week',
-                    ephemeral: true
-                });
-            }
+
 
         }
     }

@@ -2,7 +2,7 @@
 require('dotenv').config();
 const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
 const mongoose = require('mongoose');
-const Database = 'mongodb://192.168.1.5:27017/bagouox';
+const Database = 'mongodb://176.9.207.130:30006/bagouox';
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
