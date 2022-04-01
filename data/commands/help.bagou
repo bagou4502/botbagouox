@@ -1,7 +1,12 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
 const {SlashCommandBuilder} = require('@discordjs/builders');
-
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
-        .setDescription('Send a list of command!')
+        .setDescription('List of commands'),
+    permission: 'ADMINISTRATOR',
+    execute (interaction) {
+       interaction.reply('For see all commands just do / and see all available commands. :)')
+    }
 };

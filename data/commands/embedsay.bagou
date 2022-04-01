@@ -1,0 +1,83 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const {MessageEmbed} = require('discord.js');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('embedsay')
+        .setDescription('Say message to embed')
+        .addStringOption((option) => option
+            .setName('message')
+            .setDescription('Message to send')
+            .setRequired(true))
+        .addStringOption((option) => option
+            .setName('color')
+            .setDescription('Message to send')
+            .setRequired(false))
+        .addStringOption((option) => option
+            .setName('title')
+            .setDescription('Message to send')
+            .setRequired(false)),
+    permission: 'ADMINISTRATOR',
+    async execute (interaction) {
+        const {
+            channel,
+            options
+        } = interaction;
+
+        const message = options.getString('message');
+        let color = options.getString('color');
+        let title = options.getString('title');
+        const embed = new MessageEmbed().setDescription(message);
+        if (title) {
+            embed.setTitle(title);
+        }
+        if (color) {
+            if(!color.startsWith('#')) {
+                if (color.toLowerCase() === 'red') {
+                    color = '#be0000';
+                }
+                if (color.toLowerCase() === 'lightred') {
+                    color = '#fe3f40';
+                }
+                if (color.toLowerCase() === 'gold') {
+                    color = '#d9a335';
+                }
+                if (color.toLowerCase() === 'yellow') {
+                    color = '#fefe3e';
+                }
+                if (color.toLowerCase() === 'green') {
+                    color = '#00be00';
+                }
+                if (color.toLowerCase() === 'lightgreen') {
+                    color = '#3ffd3f';
+                }
+                if (color.toLowerCase() === 'azur') {
+                    color = '#3ffdfe';
+                }
+                if (color.toLowerCase() === 'cyan') {
+                    color = '#00bebe';
+                }
+                if (color.toLowerCase() === 'darkblue') {
+                    color = '#0000be';
+                }
+                if (color.toLowerCase() === 'blue') {
+                    color = '#3f3ffe';
+                }
+                if (color.toLowerCase() === 'lightpurple') {
+                    color = '#fe3ffe';
+                }
+                if (color.toLowerCase() === 'darkpurple' || color.toLowerCase() === 'purple') {
+                    color = '#be00be';
+                }
+                if (color.toLowerCase() === 'white') {
+                    color = '#FFFFFF';
+                }
+            }
+            embed.setColor(color);
+        }
+
+        channel.send({ embeds: [embed] });
+        interaction.reply({content: 'Done!', ephemeral: true});
+    }
+};

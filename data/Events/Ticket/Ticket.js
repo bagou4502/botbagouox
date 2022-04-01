@@ -9,10 +9,6 @@ module.exports = {
     name: 'interactionCreate',
     description: 'Ticket',
 
-    /**
-     *
-     * @param {ButtonInteraction} interaction
-     */
     async execute (interaction) {
         if (!interaction.isButton()) {
             return;
@@ -23,6 +19,7 @@ module.exports = {
         }
 
         const ID = Math.floor(Math.random() * 90000) + 10000;
+
         await guild.channels.create(`ticket-${ID}`, {
             type: 'GUILD_TEXT',
             parent: TICKETCATID,
@@ -47,20 +44,21 @@ module.exports = {
                 Locked: false,
                 Type: customId
             });
-            const Embed = new MessageEmbed()
+            const EmbedExplain = new MessageEmbed()
                 .setAuthor(`${guild.name} | Ticket : ${ID}`, guild.iconURL({dynamic: true}))
-                .setDescription('Explain your problem/question here.');
+                .setDescription('**READ THE INSTRUCTIONS!**\n-If you have a transaction id send it.\n-Send your panel version (you can see it on overview tab of admin panel part)\n -Send your wings version(s) (you can see it by clicking on your node)\n -Send panel logs you can get it with:\n```tail -n 100 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | nc bin.ptdl.co 99```\n-Send wings logs you can get it with:\n```tail -n 100 /var/log/pterodactyl/wings.log | nc bin.ptdl.co 99```\n After ask your question/explain your problem');
+
             const Buttons = new MessageActionRow()
                 .addComponents(new MessageButton()
                     .setCustomId('ticketclose')
                     .setLabel('❌ Close ticket')
                     .setStyle('PRIMARY'));
-            channel.send({embeds: [Embed], components: [Buttons]});
+            channel.send({embeds: [EmbedExplain], components: [Buttons]});
             await channel.send({content: `${member} here is your ticket`}).then((ma) => {
                 setTimeout(() => {
                     // eslint-disable-next-line no-empty-function
                     ma.delete().catch(() => {});
-                }, 5000);
+                }, 2000);
             });
 
             interaction.reply({content: `Votre ticket a été crée #ticket-${ID}`, ephemeral: true});

@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
 // eslint-disable-next-line no-unused-vars
-const {ButtonInteraction, MessageEmbed, MessageActionRow, MessageButton, Interaction} = require('discord.js');
+const {ButtonInteraction, MessageEmbed} = require('discord.js');
 const DB = require('../../schemas/Ticket');
 const DBTRANSCRIPT = require('../../schemas/Transcription');
 const TRANSCRIPTIONID = process.env.TRANSCRIPTID;
@@ -101,10 +101,10 @@ module.exports = {
                         ]
                     });
                 });
-                interaction.reply({embeds: [Embed.setDescription(`The transcript is now saved [TRANSCRIPT](${Message.url})`)]});
+                interaction.reply({embeds: [Embed.setDescription(`The transcript is now saved [TRANSCRIPT](${Message.url})\nThis channel go to be deleted in 3s.`)]});
                 setTimeout(() => {
                     channel.delete();
-                }, 10000);
+                }, 3000);
             }
         });
     }

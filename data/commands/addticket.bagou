@@ -1,0 +1,31 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const {log} = require('../../libs/logger');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('addticket')
+        .setDescription('Add a user to ticket')
+        .addStringOption((option) => option
+            .setName('user')
+            .setDescription('User id')
+            .setRequired(true)),
+    permission: 'ADMINISTRATOR',
+    async execute (interaction) {
+        const {
+            channel,
+            options,
+            guild
+        } = interaction;
+        const user = await guild.members.fetch(options.getString('user'));
+        channel.permissionOverwrites.edit(user, {
+            SEND_MESSAGES: true,
+            VIEW_CHANNEL: true
+        })
+        log.info("User " + user + " added to a ticket");
+        interaction.reply({
+            content: 'User added successfully!',
+            ephemeral: false
+        });
+    }
+};

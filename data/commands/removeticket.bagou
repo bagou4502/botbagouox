@@ -1,0 +1,32 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const {SlashCommandBuilder} = require('@discordjs/builders');
+const {log} = require('../../libs/logger');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('removeticket')
+        .setDescription('Remove a user to ticket')
+        .addStringOption((option) => option
+            .setName('user')
+            .setDescription('User id')
+            .setRequired(true)),
+    permission: 'ADMINISTRATOR',
+    async execute (interaction) {
+        const {
+            channel,
+            options,
+            guild
+        } = interaction;
+        const user = await guild.members.fetch(options.getString('user'));
+        channel.permissionOverwrites.edit(user, {
+            SEND_MESSAGES: false,
+            VIEW_CHANNEL: false
+        })
+        log.info("User " + user + " removed from a ticket");
+
+        interaction.reply({
+            content: 'User removed successfully!',
+            ephemeral: false
+        });
+    }
+};
