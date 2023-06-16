@@ -11,7 +11,7 @@ const TRANSCRIPTIONID = process.env.TRANSCRIPTID;
 const log = require('../../../libs/logger').log;
 const {v4} = require('uuid');
 const {createTranscript} = require('discord-html-transcripts');
-const ClientFTP = require('basic-ftp');
+const Client = require('ssh2-sftp-client');
 const fs = require('fs');
 module.exports = {
     name: 'interactionCreate',
@@ -61,47 +61,59 @@ module.exports = {
                         log.err(errr);
                     }
                 });
-                const clientftp = new ClientFTP.Client();
+                const clientsftp = new Client();
                 try {
                     log.info(`Start upload of ${docs.TicketID} on transcripts server`);
-                    await clientftp.access({
+                    await clientsftp.connect({
                         host: process.env.FTPHOTE,
+                        port: 22,
                         user: process.env.FTPUSER,
                         password: process.env.FTPPASS,
-                        secure: false
                     });
-                    await clientftp.uploadFrom(`./transcripts/${name}.transcripts`, `${name}.html`);
+                    await clientsftp.put(`./transcripts/${name}.transcripts`, `/home/clients/6087b00a271549b68ab2a98fe0a647f5/sites/transcripts.bagou450.com/${name}.html`);
                     log.info('Uploaded sucessfully');
                 } catch (errr) {
                     log.err(errr);
                 }
-                clientftp.close();
+                clientsftp.end();
                 fs.unlinkSync(`./transcripts/${name}.transcripts`);
                 await DBTRANSCRIPT.create({
                     TicketID: docs.TicketID,
-                    URL: `https://transcripts.bagou450.com/data/${name}.html`
+                    URL: `https://transcripts.bagou450.com/${name}.html`
                 });
                 await DB.updateOne({ChannelID: channel.id}, {Closed: true});
                 const MEMBER = guild.members.cache.get(docs.MemberID);
-                const Message = await guild.channels.cache.get(TRANSCRIPTIONID).send({
+                 if (typeof(MEMBER) !== 'undefined') {
+                                     const Message = await guild.channels.cache.get(TRANSCRIPTIONID).send({
                     embeds: [
                         Embed
                             .setAuthor(MEMBER.user.tag, MEMBER.user.displayAvatarURL({dynamic: true}))
                             .setTitle(`Transcript Type: ${docs.Type}\nID: ${docs.TicketID}`)
-                            .setDescription(`[Here](https://transcripts.bagou450.com/data/${name}.html)`)
+                            .setDescription(`[Here](https://transcripts.bagou450.com/${name}.html)`)
                     ]
                 });
-                client.users.fetch(MEMBER.user.id, false).then((userr) => {
+                                     client.users.fetch(MEMBER.user.id, false).then((userr) => {
                     userr.send({
                         embeds: [
                             Embed
                                 .setAuthor(MEMBER.user.tag, MEMBER.user.displayAvatarURL({dynamic: true}))
                                 .setTitle(`Your ticket id ${docs.TicketID} has been closed`)
-                                .setDescription(`[Click Here](https://transcripts.bagou450.com/data/${name}.html) for see ticket logs`)
+                                .setDescription(`[Click Here](https://transcripts.bagou450.com/${name}.html) for see ticket logs`)
                         ]
                     });
                 });
-                interaction.reply({embeds: [Embed.setDescription(`The transcript is now saved [TRANSCRIPT](${Message.url})\nThis channel go to be deleted in 3s.`)]});
+                 } else {
+                     const Message = await guild.channels.cache.get(TRANSCRIPTIONID).send({
+                    embeds: [
+                        Embed
+                            .setTitle(`Transcript Type: ${docs.Type}\nID: ${docs.TicketID}`)
+                            .setDescription(`[Here](https://transcripts.bagou450.com/${name}.html)`)
+                    ]
+                });
+                 }
+
+
+                interaction.reply({embeds: [Embed.setDescription(`The transcript is now saved \nThis channel go to be deleted in 3s.`)]});
                 setTimeout(() => {
                     channel.delete();
                 }, 3000);

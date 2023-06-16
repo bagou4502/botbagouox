@@ -1,0 +1,12 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const {SlashCommandBuilder} = require('@discordjs/builders');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('egginfos')
+        .setDescription('eggInfos'),
+    permission: 'ADMINISTRATOR',
+    execute (interaction) {
+       interaction.reply('This error is caused by a custom eggId for Minecaft. Please send a screenshot of your Minecraft eggs list and your app/Http/Controllers/Api/Client/Servers/VersionsController.php');
+    }
+};

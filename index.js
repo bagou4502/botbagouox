@@ -2,7 +2,7 @@
 require('dotenv').config();
 const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
 const mongoose = require('mongoose');
-const Database = 'mongodb://176.9.207.130:30006/bagouox';
+const Database = 'mongodb://185.25.205.206:30001/bagouox';
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -21,7 +21,9 @@ const logs = liblog.log;
 const commands = [];
 client.commands = new Collection();
 const CommandsFiles = fs.readdirSync('./data/commands').filter((file) => file.endsWith('.bagou'));
-
+process.on('uncaughtException', (err) => {
+    logs.err(err);
+});
 for (const file of CommandsFiles) {
     const command = require(`./data/commands/${file}`);
     commands.push(JSON.stringify(command.data));
@@ -65,6 +67,8 @@ client.on('ready', () => {
         .catch(() => logs.fatal('Cant connect to Database.'));
 
     require('./data/Handlers/Events')(client);
+    require('./data/Handlers/Messages')(client);
+
 
 });
 

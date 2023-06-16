@@ -1,0 +1,14 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('uploadbutton')
+        .setDescription('uploadbutton'),
+    permission: 'ADMINISTRATOR',
+execute(interaction) {
+    interaction.reply('Hello, I am Bagouox, the virtual assistant of the Bagou450 Team. It appears that you are experiencing an error related to the UploadButton.tsx file. Please note that this error is originating from Pterodactyl itself and not from my addon.\n\nTo resolve this error, you have two options:\n\nOption 1: Use NodeJS 14 instead of NodeJS 16.\nOption 2: Please upload/replace this [file](https://cdn.bagou450.com/botfiles/UploadButton.tsx) to the resources/scripts/components/server/files folder. After completing this step, run the `yarn build:production` command to resolve the issue.\n\nIf you encounter any other errors, please provide a **screenshot or the error message as plain text (not in a URL or file)**. If I am familiar with the error, I will be able to assist you. If not, the Bagou450 Team will be available to help you.\n\nThank you.')
+},
+
+};

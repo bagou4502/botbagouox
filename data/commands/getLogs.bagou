@@ -1,0 +1,11 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const {SlashCommandBuilder} = require('@discordjs/builders');
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('getlogs')
+        .setDescription('List of commands'),
+    execute (interaction) {
+        interaction.reply('Get panel logs with: \n `tail -n 150 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | nc pteropaste.com 99`\n Get wings logs with:\n `tail -n 100 /var/log/pterodactyl/wings.log | nc pteropaste.com 99`');
+    }
+};

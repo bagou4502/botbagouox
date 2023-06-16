@@ -20,7 +20,8 @@ module.exports = {
         const user = await guild.members.fetch(options.getString('user'));
         channel.permissionOverwrites.edit(user, {
             SEND_MESSAGES: true,
-            VIEW_CHANNEL: true
+            VIEW_CHANNEL: true,
+            READ_MESSAGE_HISTORY: true
         })
         log.info("User " + user + " added to a ticket");
         interaction.reply({

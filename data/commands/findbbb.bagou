@@ -1,0 +1,13 @@
+/* eslint-disable no-undef */
+require('dotenv').config();
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('findbbb')
+        .setDescription('findbbb'),
+    permission: 'ADMINISTRATOR',
+    execute(interaction) {
+        interaction.reply('License are sent automatically through BuiltByBit conversation some minutes after the purchase. \nIn some cases, it can take hours due to verification on the BuiltByBit side. \n\n**You can find your license here: https://builtbybit.com/conversations/ ** \n\nIf you don\'t see any license, please send your BuiltByBit username, and the Bagou450 Team will check that for you.');
+    },
+};
