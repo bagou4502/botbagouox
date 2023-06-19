@@ -8,5 +8,6 @@ module.exports = {
     permission: 'ADMINISTRATOR',
     execute (interaction) {
        interaction.reply('For see all commands just do / and see all available commands. :)')
+
     }
 };

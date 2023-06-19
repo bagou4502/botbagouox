@@ -1,10 +1,12 @@
-/* eslint-disable no-undef */
 require('dotenv').config();
-const {MessageEmbed, MessageActionRow, MessageButton, } = require('discord.js');
+const {StringSelectMenuBuilder, StringSelectMenuOptionBuilder, TextInputStyle, ModalBuilder, TextInputBuilder,
+    ActionRowBuilder} = require('discord.js');
 const DB = require('../../schemas/Ticket');
 const EVERYONEID = process.env.EVERYONE_ID;
 const TICKETCATID = process.env.TICKETCATID;
-const {Modal, TextInputComponent, showModal} = require('discord-modals');
+const APIENDPOINT = process.env.APIURL;
+
+const axios = require('axios');
 
 module.exports = {
     name: 'interactionCreate',
@@ -15,60 +17,60 @@ module.exports = {
             return;
         }
         const {guild, member, customId} = interaction;
+
         if (!['ticketopen'].includes(customId)) {
             return;
         }
-        const support = guild.roles.cache.find((role) => role.name === "Support")
-        DB.count({}, async (err, number) => {
-        await guild.channels.create(`ticket-${number+1}`, {
-            type: 'GUILD_TEXT',
-            parent: TICKETCATID,
-            permissionOverwrites: [
-                {
-                    id: member.id,
-                    allow: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY']
+        let page = 1;
+        if (customId.charAt(customId.length - 1) !== 'n') {
+            page = customId.charAt(customId.length - 1);
+        }
+        // Create the modal
+        const select = new StringSelectMenuBuilder()
+            .setCustomId('ticketmenu')
+            .setPlaceholder('Select the relevant add-on.:');
+        if(page !== 1) {
+            select.addOptions(new StringSelectMenuOptionBuilder().setLabel('⬅️ Previous page')
+                .setValue(`previous${page - 1}`));
+        }
+        let totalpage = -1;
+        await axios.get(`${APIENDPOINT}web/addons/get?page=${page}&search=&perpage=23`)
+            .then((response) => response.data)
+            .then((data) => {
+                totalpage = data.totalpage;
+                const addonlist = data.data;
+                Object.keys(addonlist).forEach((key) => {
+                    const name = addonlist[key].name;
+                    const desc = addonlist[key].tag;
+                    select.addOptions(new StringSelectMenuOptionBuilder().setLabel(name)
+                        .setDescription(desc)
+                        .setValue(String(addonlist[key].id)));
+                });
+            })
+            .catch((error) => console.log(error));
+        if (totalpage === -1) {
+            await interaction.reply({content: 'Error', ephemeral: true});
+            return;
+        }
+        if (page === totalpage) {
+            select.addOptions(new StringSelectMenuOptionBuilder()
+                .setLabel('Other')
+                .setDescription('Another addon than listed addons.')
+                .setValue('other'));
+        } else if (totalpage > page) {
+            select.addOptions(new StringSelectMenuOptionBuilder()
+                .setLabel('Next page ➡️')
+                .setValue(`next${page + 1}`));
+        }
 
-                },
-                {
-                    id: support.id,
-                    allow: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY']
+        const row = new ActionRowBuilder()
+            .addComponents(select);
 
-                },
-                {
-                    id: EVERYONEID,
-                    deny: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY']
-                }
-            ]
-        }).then(async (channel) => {
-            await DB.create({
-                GuildID: guild.id,
-                MemberID: member.id,
-                TicketID: number+1,
-                ChannelID: channel.id,
-                Closed: false,
-                Locked: false,
-                Type: customId
-            });
-            const EmbedExplain = new MessageEmbed()
-                .setAuthor(`${guild.name} | Ticket : ${number+1}`, guild.iconURL({dynamic: true}))
-                .setDescription('**READ THE INSTRUCTIONS!**\n-If you have a transaction id send it.\n-Send your panel version (you can see it on overview tab of admin panel part)\n -Send your wings version(s) (you can see it by clicking on your node)\n -Send panel logs you can get it with:\n```tail -n 100 /var/www/pterodactyl/storage/logs/laravel-$(date +%F).log | nc pteropaste.com 99```\n-Send wings logs you can get it with:\n```tail -n 100 /var/log/pterodactyl/wings.log | nc pteropaste.com 99```\n After ask your question/explain your problem');
-
-            const Buttons = new MessageActionRow()
-                .addComponents(new MessageButton()
-                    .setCustomId('ticketclose')
-                    .setLabel('❌ Close ticket')
-                    .setStyle('PRIMARY'));
-            channel.send({embeds: [EmbedExplain], components: [Buttons]});
-            await channel.send({content: `${member} here is your ticket`}).then((ma) => {
-                setTimeout(() => {
-                    // eslint-disable-next-line no-empty-function
-                    ma.delete().catch(() => {});
-                }, 2000);
-            });
-
-            interaction.reply({content: `Votre ticket a été crée #ticket-${number+1}`, ephemeral: true});
+        await interaction.reply({
+            content: 'Please select the relevant add-on!',
+            components: [row],
+            ephemeral: true
         });
-    });
-
     }
 };
+

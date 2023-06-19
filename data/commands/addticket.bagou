@@ -2,11 +2,12 @@
 require('dotenv').config();
 const {SlashCommandBuilder} = require('@discordjs/builders');
 const {log} = require('../../libs/logger');
+const {PermissionsBitField} = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('addticket')
         .setDescription('Add a user to ticket')
-        .addStringOption((option) => option
+        .addUserOption((option) => option
             .setName('user')
             .setDescription('User id')
             .setRequired(true)),
@@ -17,15 +18,15 @@ module.exports = {
             options,
             guild
         } = interaction;
-        const user = await guild.members.fetch(options.getString('user'));
-        channel.permissionOverwrites.edit(user, {
-            SEND_MESSAGES: true,
-            VIEW_CHANNEL: true,
-            READ_MESSAGE_HISTORY: true
+        const user = options.getUser('user');
+        channel.permissionOverwrites.edit(user.id, {
+            SendMessages: true,
+            ViewChannel: true,
+            ReadMessageHistory: true
         })
-        log.info("User " + user + " added to a ticket");
+        log.info("User " + user.username + " added to a ticket");
         interaction.reply({
-            content: 'User added successfully!',
+            content: `User ${user.username} added successfully!`,
             ephemeral: false
         });
     }

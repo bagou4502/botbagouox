@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 require('dotenv').config();
-const {Client, Intents, Collection, MessageEmbed} = require('discord.js');
+const {Client, GatewayIntentBits, Collection, MessageEmbed} = require('discord.js');
 const mongoose = require('mongoose');
 const Database = 'mongodb://185.25.205.206:30001/bagouox';
 const client = new Client({
     intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages
     ]
 });
 const fs = require('fs');
@@ -21,9 +21,9 @@ const logs = liblog.log;
 const commands = [];
 client.commands = new Collection();
 const CommandsFiles = fs.readdirSync('./data/commands').filter((file) => file.endsWith('.bagou'));
-process.on('uncaughtException', (err) => {
+/*process.on('uncaughtException', (err) => {
     logs.err(err);
-});
+});*/
 for (const file of CommandsFiles) {
     const command = require(`./data/commands/${file}`);
     commands.push(JSON.stringify(command.data));

@@ -6,7 +6,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('removeticket')
         .setDescription('Remove a user to ticket')
-        .addStringOption((option) => option
+        .addUserOption((option) => option
             .setName('user')
             .setDescription('User id')
             .setRequired(true)),
@@ -17,15 +17,15 @@ module.exports = {
             options,
             guild
         } = interaction;
-        const user = await guild.members.fetch(options.getString('user'));
-        channel.permissionOverwrites.edit(user, {
-            SEND_MESSAGES: false,
-            VIEW_CHANNEL: false
+        const user = options.getUser('user');
+        channel.permissionOverwrites.edit(user.id, {
+            SendMessages: false,
+            ViewChannel: false,
+            ReadMessageHistory: false
         })
-        log.info("User " + user + " removed from a ticket");
-
+        log.info("User " + user.username + " was successfully!");
         interaction.reply({
-            content: 'User removed successfully!',
+            content: `User ${user.username} removed successfully!`,
             ephemeral: false
         });
     }
